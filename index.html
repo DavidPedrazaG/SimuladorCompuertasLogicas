@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulador Profesional de Compuertas Lógicas</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+</head>
+<body>
+  <div id="toolbar">
+    <div class="button" onclick="addGate('AND')">AND</div>
+    <div class="button" onclick="addGate('OR')">OR</div>
+    <div class="button" onclick="addGate('NOT')">NOT</div>
+    <div class="button" onclick="addGate('NAND')">NAND</div>
+    <div class="button" onclick="addGate('NOR')">NOR</div>
+    <div class="button" onclick="addGate('XOR')">XOR</div>
+    <div class="button" onclick="addGate('XNOR')">XNOR</div>
+    <div class="button" onclick="addInput('A')">Entrada A</div>
+    <div class="button" onclick="addInput('B')">Entrada B</div>
+    <div class="button" onclick="addInput('C')">Entrada C</div>
+    <div class="button" onclick="addInput('D')">Entrada D</div>
+    <div class="button" onclick="deleteSelected()">Eliminar</div>
+    <div class="button" onclick="calculateFormula()">Calcular Fórmula</div>
+    <div class="button" onclick="clearWorkspace()">Limpiar Todo</div>
+  </div>
+
+  <div id="board">
+    <svg id="connections">
+      <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+                refX="9" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" fill="var(--connection-color)"/>
+        </marker>
+      </defs>
+    </svg>
+
+    <div id="notification"></div>
+
+    <div id="formula">
+      <h3>Fórmula Lógica</h3>
+      <div id="formula-content"></div>
+    </div>
+  </div>
+  <div class="modal modal-dark fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalLabel">Tabla de verdades</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="modal-body">
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+  <script src="script.js"></script>
+</body>
+</html>
