@@ -367,11 +367,9 @@ function isValidConnection(from, to) {
         modalBody.innerHTML = ``
 		
 		formulas.forEach(formula =>{
-
-            console.log(formula)
-
+			
 			const table = document.createElement("table")
-            table.className = "table table-dark table-striped-columns"
+            table.className = "table table-striped-columns"
 			let thead = document.createElement("thead")
 			let tbody = document.createElement("tbody")
 
@@ -409,7 +407,7 @@ function isValidConnection(from, to) {
 		
 		// Mostrar la fórmula
 		const formulaDiv = document.getElementById('formula-content');
-		formulaDiv.innerHTML = formulas.join('<br>');
+		formulaDiv.innerHTML = formulas.join('<br><br>');
 		
 		const formulaContainer = document.getElementById('formula');
 		formulaContainer.style.display = 'block';
@@ -449,7 +447,7 @@ function isValidConnection(from, to) {
 		// Construir fórmula según el tipo de compuerta
 		switch (type) {
 			case 'NOT':
-			return `¬(${inputFormulas[0]})`;
+			return `¬[${inputFormulas[0]}]`;
 			case 'AND':
 			case 'OR':
 			case 'NAND':
@@ -519,45 +517,49 @@ function isValidConnection(from, to) {
 		inProgress.delete(gateId);
 	}
 	
-	// Hacer un elemento arrastrable
 	function makeDraggable(el) {
 		let offsetX, offsetY;
 		let isDragging = false;
-		
-		el.onmousedown = function(e) {
+	
+		el.onmousedown = function (e) {
 			if (e.target !== el && !e.target.classList.contains('output')) return;
-			
+	
+			const board = document.getElementById("board");
+			const boardRect = board.getBoundingClientRect();
+	
 			isDragging = true;
-			offsetX = e.offsetX;
-			offsetY = e.offsetY;
-			
-			// Traer al frente
+			offsetX = e.clientX - el.getBoundingClientRect().left;
+			offsetY = e.clientY - el.getBoundingClientRect().top;
+	
+			el.style.position = "absolute";
 			el.style.zIndex = 1000;
-			
-			document.onmousemove = function(e) {
+	
+			document.onmousemove = function (e) {
 				if (!isDragging) return;
-				
-				const x = e.pageX - offsetX;
-				const y = e.pageY - offsetY;
-				
-				// Limitar al área del tablero
-				const maxX = window.innerWidth - el.offsetWidth;
-				const maxY = window.innerHeight - el.offsetHeight - 56; // Restar toolbar
-				
-				el.style.left = Math.max(0, Math.min(x, maxX)) + "px";
-				el.style.top = Math.max(0, Math.min(y, maxY)) + "px";
-				
-				drawConnections();
+	
+				let x = e.clientX - boardRect.left - offsetX;
+				let y = e.clientY - boardRect.top - offsetY;
+	
+				const maxX = board.clientWidth - el.offsetWidth;
+				const maxY = board.clientHeight - el.offsetHeight;
+	
+				x = Math.max(0, Math.min(x, maxX));
+				y = Math.max(0, Math.min(y, maxY));
+	
+				el.style.left = `${x}px`;
+				el.style.top = `${y}px`;
+	
+				drawConnections?.();
 			};
-			
-			document.onmouseup = function() {
+	
+			document.onmouseup = function () {
 				isDragging = false;
-				el.style.zIndex = '';
+				el.style.zIndex = "";
 				document.onmousemove = null;
 				document.onmouseup = null;
 			};
 		};
-	}
+	}	
 	
 	// Eliminar elemento seleccionado
 	function deleteSelected() {
@@ -658,18 +660,12 @@ function isValidConnection(from, to) {
 			if (char === "(") {
 				brackets = true;
 				
-			} else if (char === "¬") {
-                let value = equation[i + 2]
-				if (brackets) {
-					bracketsValues.push(not(inputValues[value]));
+			} else if (char === "]") {
+                if (brackets) {
+					bracketsValues[bracketsValues.length - 1] = not(bracketsValues[bracketsValues.length - 1]);
 				} else {
-					values.push(not(inputValues[value]));
+					values[values.length - 1] = not(values[values.length - 1]);
 				}
-                let targetIndex = i + 3;
-                if (targetIndex < chars.length) {
-                    chars.splice(targetIndex, 1);
-                }
-				
 			} else if (inputValues.hasOwnProperty(char)) {
 				if (brackets) {
 					bracketsValues.push(inputValues[char]);

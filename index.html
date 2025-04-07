@@ -4,43 +4,58 @@
   <meta charset="UTF-8">
   <title>Simulador Profesional de Compuertas Lógicas</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="img/icon.png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 </head>
 <body>
-  <div id="toolbar">
-    <div class="button" onclick="addGate('AND')">AND</div>
-    <div class="button" onclick="addGate('OR')">OR</div>
-    <div class="button" onclick="addGate('NOT')">NOT</div>
-    <div class="button" onclick="addGate('NAND')">NAND</div>
-    <div class="button" onclick="addGate('NOR')">NOR</div>
-    <div class="button" onclick="addGate('XOR')">XOR</div>
-    <div class="button" onclick="addGate('XNOR')">XNOR</div>
-    <div class="button" onclick="addInput('A')">Entrada A</div>
-    <div class="button" onclick="addInput('B')">Entrada B</div>
-    <div class="button" onclick="addInput('C')">Entrada C</div>
-    <div class="button" onclick="addInput('D')">Entrada D</div>
-    <div class="button" onclick="deleteSelected()">Eliminar</div>
-    <div class="button" onclick="calculateFormula()">Calcular Fórmula</div>
-    <div class="button" onclick="clearWorkspace()">Limpiar Todo</div>
-  </div>
 
-  <div id="board">
-    <svg id="connections">
-      <defs>
-        <marker id="arrowhead" markerWidth="10" markerHeight="7" 
-                refX="9" refY="3.5" orient="auto">
-          <polygon points="0 0, 10 3.5, 0 7" fill="var(--connection-color)"/>
-        </marker>
-      </defs>
-    </svg>
-
-    <div id="notification"></div>
-
-    <div id="formula">
-      <h3>Fórmula Lógica</h3>
-      <div id="formula-content"></div>
-    </div>
-  </div>
+  <main>
+    <section class="left-panel">
+      <img  src="img/logo.png" style="padding: 20px;" width="90%" alt="">
+      <div class="controls">
+        <h5 style="color: white;">Operadores lógicos</h5>
+        <div class="button gate-btn" onclick="addGate('AND')">AND</div>
+        <div class="button gate-btn" onclick="addGate('OR')">OR</div>
+        <div class="button gate-btn" onclick="addGate('NOT')">NOT</div>
+        <div class="button gate-btn" onclick="addGate('NAND')">NAND</div>
+        <div class="button gate-btn" onclick="addGate('NOR')">NOR</div>
+        <div class="button gate-btn" onclick="addGate('XOR')">XOR</div>
+        <div class="button gate-btn" onclick="addGate('XNOR')">XNOR</div>
+        <h5 style="color: white;">Entradas</h5>
+        <div class="button input-btn" onclick="addInput('A')">Entrada A</div>
+        <div class="button input-btn" onclick="addInput('B')">Entrada B</div>
+        <div class="button input-btn" onclick="addInput('C')">Entrada C</div>
+        <div class="button input-btn" onclick="addInput('D')">Entrada D</div>
+      </div>
+    </section>
+    <section class="main-panel">
+      <header class="operations">
+        <div class="toolbar">
+          <h1 style="color: white;" id="stadistics"></h1>
+          <div class="button execute" onclick="calculateFormula()">Calcular</div>
+          <div class="button delete" onclick="deleteSelected()">Eliminar</div>
+          <div class="button clean" onclick="clearWorkspace()">Limpiar Todo</div>
+        </div>
+      </header>
+      <div id="board">
+        <div id="notification"></div>
+        <svg id="connections">
+          <defs>
+            <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+                    refX="9" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="var(--connection-color)"/>
+            </marker>
+          </defs>
+        </svg>
+    
+        <div id="formula">
+          <h3>Fórmulas Lógicas</h3>
+          <div id="formula-content"></div>
+        </div>
+      </div>
+    </section>
+    
+  </main>
   <div class="modal modal-dark fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -54,6 +69,7 @@
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+  <!-- <script src="board.js"></script> -->
   <script src="script.js"></script>
 </body>
 </html>
